@@ -1,0 +1,25 @@
+<div class="card-container">
+    <ng-container *ngFor="let card of cardData">
+      <mat-card class="example-card" outlined>
+        <mat-card-content>
+          <div class="header">
+            <div class="card-data" [ngStyle]="{'width': isChild ? '100%' : '70%'}" (click)="navigateToWords(card)">
+                <h5>{{ card.name }}</h5>
+                <h4>{{card.words.length}}</h4>
+            </div>
+            <ng-container *ngIf="!isChild">
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+            </ng-container>
+           
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openDialog(card)">Edit</button>
+              <button mat-menu-item (click)="openDialog(card,true)">Delete</button>
+            </mat-menu>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+  </div>
+  

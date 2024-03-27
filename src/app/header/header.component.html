@@ -1,12 +1,18 @@
 <mat-toolbar color="primary">
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-        <mat-icon>menu</mat-icon>
-    </button>
-    Little Linguist
-    <span class="example-spacer"></span>
-    <mat-icon>perm_identity</mat-icon>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+  </button>
+  Little Linguist
+  <span class="example-spacer"></span>
+  <button mat-icon-button [matMenuTriggerFor]="iconMenu">
+      <mat-icon>perm_identity</mat-icon>
+  </button>
 </mat-toolbar>
 <mat-menu #menu="matMenu">
-  <button mat-menu-item>Admin</button>
-  <button mat-menu-item>Let's Play</button>
+  <button mat-menu-item routerLink="/dashboard">Dashboard</button>
+  <button mat-menu-item routerLink="/help">Help page</button>
+</mat-menu>
+
+<mat-menu #iconMenu="matMenu">
+  <button mat-menu-item routerLink="/parent">parent</button>
 </mat-menu>

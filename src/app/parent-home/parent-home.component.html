@@ -1,0 +1,15 @@
+<div class="container">
+        <div class="add-button-container">
+            <h2>{{isChild?"Let's Play":"Manage Categories and Words"}}</h2>
+            <ng-container *ngIf="!isChild">
+                <button style="margin-left: 10px;" mat-fab color="primary" (click)="addNewCat()">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </ng-container>
+            
+          </div>
+    <div class="card-container">
+        <app-categories [cardData]="dataSource" [isChild]="isChild"></app-categories>
+      </div>
+</div>
+

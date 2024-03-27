@@ -1,14 +1,47 @@
-<div mat-dialog-content>
-    Are you sure you want to delete category {{ categoryName }}
-</div>
-<div mat-dialog-actions>
-    <button 
-        cdkFocusInitial 
-        color="primary"
-        mat-button 
-        [mat-dialog-close]="true">OK</button>
-    <button 
-        color="primary"
-        mat-button 
-        [mat-dialog-close]="false">Cancel</button>
+<div style="text-align: center">
+  <div mat-dialog-content>
+    <ng-container *ngIf="!data.allCompleted.isComplete">
+      <ng-container *ngIf="data.id != undefined">
+        <p>Choose game to play</p>
+        <mat-form-field>
+          <mat-label>Choose a game</mat-label>
+          <mat-select (selectionChange)="change($event)">
+            <mat-option
+              *ngFor="let game of availableGames"
+              [value]="game.title"
+              >{{ game.title }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+        <p><strong>Dificulty:</strong> {{ selectedGame.dificulty }}</p>
+        <p><strong>Description:</strong> {{ selectedGame.description }}</p>
+      </ng-container>
+      <ng-container *ngIf="data.id == undefined">
+        <p>
+          {{ data.result ? "Great Job!" : "Incorrect, Give it another try." }}
+        </p>
+      </ng-container>
+    </ng-container>
+    
+    <div *ngIf="data.allCompleted.isComplete">
+      <p>Grade : 50</p>
+      <p>{{ data.allCompleted.percentage | number: '1.0-0' }}{{ data.allCompleted.percentage >= 50 ? '% Good' : '% Not Satisfactory!' }}</p>
+    </div>
+  </div>
+  <div mat-dialog-actions style="justify-content: center !important">
+    <button
+      mat-button
+      color="primary"
+      [ngStyle]="{
+        'background-color':
+          selectedGame != GameLevel.MatchingGame ? 'grey' : '#4CAF50'
+      }"
+      [disabled]="selectedGame != GameLevel.MatchingGame"
+      mat-dialog-close
+      (click)="play()"
+      class="custom-button"
+    >
+      {{ data.id != undefined ? "Play" : data.result ? "CONTINUE" : "GOT IT" }}
+    </button>
+  </div>
 </div>
