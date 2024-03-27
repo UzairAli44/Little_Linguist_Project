@@ -86,6 +86,7 @@ export class MatchingGameComponent implements OnInit{
     if (this.count === totalQ + 1) {
       allCompleted.percentage = (this.score / (totalQ * 2)) * 100;
       allCompleted.isComplete = true;
+      allCompleted.id = this.id
       this.totalGames++;
       this.categoriesService.setNumberOfGames(this.totalGames);
     }

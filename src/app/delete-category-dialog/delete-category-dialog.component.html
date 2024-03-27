@@ -28,20 +28,27 @@
       <p>{{ data.allCompleted.percentage | number: '1.0-0' }}{{ data.allCompleted.percentage >= 50 ? '% Good' : '% Not Satisfactory!' }}</p>
     </div>
   </div>
-  <div mat-dialog-actions style="justify-content: center !important">
+  <div mat-dialog-actions style="display: flex; justify-content: center !important">
     <button
       mat-button
       color="primary"
       [ngStyle]="{
-        'background-color':
-          selectedGame != GameLevel.MatchingGame ? 'grey' : '#4CAF50'
+        'width': !data.allCompleted.isComplete ? '50%' : '',
+        'background-color': selectedGame != GameLevel.MatchingGame && !data.allCompleted.isComplete ? 'grey' : '#4CAF50'
       }"
       [disabled]="selectedGame != GameLevel.MatchingGame"
       mat-dialog-close
       (click)="play()"
       class="custom-button"
     >
-      {{ data.id != undefined ? "Play" : data.result ? "CONTINUE" : "GOT IT" }}
+      {{ data.allCompleted.isComplete?'Play Again': data.id != undefined ? "Play" : data.result ? "CONTINUE" : "GOT IT" }}
     </button>
+    <ng-container *ngIf = "data.allCompleted.isComplete">
+      <button mat-button color="primary" mat-dialog-close routerLin="/" class="custom-button">
+        New Game
+      </button>
+    </ng-container>
+    
+    
   </div>
 </div>

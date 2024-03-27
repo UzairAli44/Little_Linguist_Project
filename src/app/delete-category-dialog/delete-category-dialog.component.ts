@@ -42,6 +42,8 @@ export class DeleteCategoryDialogComponent {
   play(){
     if(this.data.id != undefined)
       this.route.navigate(['/game',this.data.id])
+    else if(this.data.allCompleted.isComplete)
+      this.route.navigate(['/game',this.data.allCompleted.id])
   }
   change(value:any){
     console.log(value)
