@@ -1,0 +1,12 @@
+table {
+    width: 100%;
+  }
+
+.table-data{
+    margin: 20px;
+}
+.add-button-container {
+    display: flex;
+    justify-content: center;
+  }
+  

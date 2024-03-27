@@ -1,0 +1,8 @@
+.container{
+    margin: 40px;
+}
+.add-button-container {
+    display: flex;
+    justify-content: center;
+  }
+  

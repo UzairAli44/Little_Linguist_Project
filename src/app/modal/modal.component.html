@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>
+    {{ data.modalTitle }}
+</h1>
+
+<div mat-dialog-content>
+    <ng-container *ngIf="!data.isDelete && !data.addNew">
+        <mat-form-field>
+            <input matInput placeholder="Enter your category" [(ngModel)]="data.card.name">
+        </mat-form-field>
+    </ng-container>
+    <p *ngIf="data.isDelete">Are you sure you want delete {{data.card.name}}?</p>
+    <ng-container *ngIf="data.addNew">
+        <mat-form-field>
+            <mat-label>{{ data.label }}</mat-label>
+            <input matInput [placeholder]="data.placeholder" [(ngModel)]="newCatText">
+        </mat-form-field>
+        
+        <ng-container *ngIf="data.isWord">
+            <mat-form-field style="margin-left: 10px;">
+                <mat-label>In Hebrew</mat-label>
+                <input matInput [placeholder]="data.placeholder" [(ngModel)]="newWordInHebrew">
+            </mat-form-field>
+        </ng-container>
+    </ng-container>
+    
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close (click)="onCloseClick()">Close</button>
+  <button mat-button mat-dialog-close (click)="updateCat()">{{ data.isDelete ? 'Delete' : data.addNew ? 'Add' : 'Update' }}</button>
+</div>
