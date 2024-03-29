@@ -107,10 +107,18 @@ export class MatchingGameComponent implements OnInit{
       data:{ result: result,allCompleted}});
 
     dialogRef.afterClosed().subscribe(result => {
-      this.result = null
-      this.selectedWord = null
-      ele.targetSelected = false
-      this.shuffledData[this.selectedIndex].originDisable = true;
+      console.log('result...',result)
+      if(result && result.isComplete){
+        this.count = 1;
+        this.score = 12;
+        this.ngOnInit()
+      }
+      else{
+        this.result = null
+        this.selectedWord = null
+        ele.targetSelected = false
+        this.shuffledData[this.selectedIndex].originDisable = true;
+      }
     });
   }
   selectOrigin(el:any,index:any){
