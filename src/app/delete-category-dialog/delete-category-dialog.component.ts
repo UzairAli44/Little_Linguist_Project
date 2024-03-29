@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -33,17 +33,23 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DeleteCategoryDialogComponent {
-  // selectedGame:any = GameLevel.MatchingGame;
   availableGames: any[] = [GameLevel.MatchingGame,GameLevel.Trivia,GameLevel.Bilingual]
-  selectedGame: any = GameLevel.MatchingGame; // Set default selection to GameLevel.MatchingGame
+  selectedGame: any; // Set default selection to GameLevel.MatchingGame
   GameLevel = GameLevel;
-  constructor(@Inject(MAT_DIALOG_DATA) public data : any, private route:Router){}
+  constructor(@Inject(MAT_DIALOG_DATA) public data : any, private route:Router,public dialogRef: MatDialogRef<DeleteCategoryDialogComponent>){}
 
   play(){
-    if(this.data.id != undefined)
+    if(this.data.id != undefined){
       this.route.navigate(['/game',this.data.id])
+      this.dialogRef.close()
+    }
     else if(this.data.allCompleted.isComplete)
-      this.route.navigate(['/game',this.data.allCompleted.id])
+      this.dialogRef.close(this.data.allCompleted);
+    else
+      this.dialogRef.close()
+  }
+  navigateBack(){
+    this.route.navigate(['/'])
   }
   change(value:any){
     console.log(value)

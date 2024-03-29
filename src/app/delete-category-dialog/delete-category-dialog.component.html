@@ -1,20 +1,21 @@
 <div style="text-align: center">
   <div mat-dialog-content>
-    <ng-container *ngIf="!data.allCompleted.isComplete">
+    <ng-container *ngIf="!data?.allCompleted?.isComplete">
       <ng-container *ngIf="data.id != undefined">
         <p>Choose game to play</p>
         <mat-form-field>
           <mat-label>Choose a game</mat-label>
           <mat-select (selectionChange)="change($event)">
-            <mat-option
+            <!-- <mat-option
               *ngFor="let game of availableGames"
-              [value]="game.title"
+              [value]="game.title" 
               >{{ game.title }}</mat-option
-            >
+            > -->
+            <mat-option *ngFor="let game of availableGames" [value]="game.title" [attr.selected]="game === selectedGame ? true : null">{{ game.title }}</mat-option>
           </mat-select>
         </mat-form-field>
-        <p><strong>Dificulty:</strong> {{ selectedGame.dificulty }}</p>
-        <p><strong>Description:</strong> {{ selectedGame.description }}</p>
+        <p><strong>Dificulty:</strong> {{ selectedGame?selectedGame.dificulty:'Easy' }}</p>
+        <p><strong>Description:</strong> {{ selectedGame?selectedGame.description:'Here is the Description for the game.' }}</p>
       </ng-container>
       <ng-container *ngIf="data.id == undefined">
         <p>
@@ -23,7 +24,7 @@
       </ng-container>
     </ng-container>
     
-    <div *ngIf="data.allCompleted.isComplete">
+    <div *ngIf="data?.allCompleted?.isComplete">
       <p>Grade : 50</p>
       <p>{{ data.allCompleted.percentage | number: '1.0-0' }}{{ data.allCompleted.percentage >= 50 ? '% Good' : '% Not Satisfactory!' }}</p>
     </div>
@@ -33,18 +34,17 @@
       mat-button
       color="primary"
       [ngStyle]="{
-        'width': !data.allCompleted.isComplete ? '50%' : '',
-        'background-color': selectedGame != GameLevel.MatchingGame && !data.allCompleted.isComplete ? 'grey' : '#4CAF50'
+        'width': !data?.allCompleted?.isComplete ? '50%' : '',
+        'background-color': selectedGame != GameLevel.MatchingGame && !data?.allCompleted?.isComplete && !data.result ? 'grey' : '#4CAF50'
       }"
-      [disabled]="selectedGame != GameLevel.MatchingGame"
-      mat-dialog-close
+      [disabled]="data.id != undefined && (!selectedGame || selectedGame.title != GameLevel.MatchingGame.title)"
       (click)="play()"
       class="custom-button"
     >
-      {{ data.allCompleted.isComplete?'Play Again': data.id != undefined ? "Play" : data.result ? "CONTINUE" : "GOT IT" }}
+      {{ data?.allCompleted?.isComplete?'Play Again': data.id != undefined ? "Play" : data.result ? "CONTINUE" : "GOT IT" }}
     </button>
-    <ng-container *ngIf = "data.allCompleted.isComplete">
-      <button mat-button color="primary" mat-dialog-close routerLin="/" class="custom-button">
+    <ng-container *ngIf = "data?.allCompleted?.isComplete">
+      <button mat-button color="primary" mat-dialog-close (click)="navigateBack()" class="custom-button">
         New Game
       </button>
     </ng-container>
