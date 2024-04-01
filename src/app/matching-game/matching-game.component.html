@@ -1,5 +1,13 @@
 <div class="table-data" style="margin: 50px">
   <h3 style="text-align: center;">Play-Matching Game - {{result?result:getOrdinal(count) + ' Selection'}}</h3>
+  <div style="text-align: end;">
+    <button
+      mat-button
+      (click)="redirectBack()"
+      class="custom-button"
+    > Exit
+  </button>
+  </div>
   <table mat-table [dataSource]="shuffledData" class="mat-elevation-z8">
     <ng-container matColumnDef="Origin">
       <th mat-header-cell *matHeaderCellDef>Origin</th>

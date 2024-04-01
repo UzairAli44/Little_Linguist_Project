@@ -7,7 +7,7 @@ import { ModalComponent } from '../modal/modal.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Category } from '../../shared/model/category';
-import { CategoriesService } from '../services/categories.service';
+import { GameService } from '../../shared/services/game.service';
 
 @Component({
   selector: 'app-parent-home',
@@ -17,7 +17,7 @@ import { CategoriesService } from '../services/categories.service';
   styleUrl: './parent-home.component.css'
 })
 export class ParentHomeComponent implements OnInit{
-  constructor(private dialog: MatDialog, private categoriesService : CategoriesService,){}
+  constructor(private dialog: MatDialog, private gameService : GameService,){}
   dataSource : Category[] = [];
   @Input() isChild:boolean = false
   cardData:any[] =  [
@@ -65,11 +65,11 @@ export class ParentHomeComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed',result);
-      this.getData
+      this.getData()
       // Handle any actions after the modal is closed
     });
   }
   getData(){
-    this.dataSource = this.categoriesService.list();
+    this.dataSource = this.gameService.list();
   }
 }

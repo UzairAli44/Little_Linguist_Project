@@ -26,5 +26,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close (click)="onCloseClick()">Close</button>
-  <button mat-button mat-dialog-close (click)="updateCat()">{{ data.isDelete ? 'Delete' : data.addNew ? 'Add' : 'Update' }}</button>
+  <button mat-button (click)="updateCat()">{{ data.isDelete ? 'Delete' : data.addNew ? 'Add' : 'Update' }}</button>
 </div>

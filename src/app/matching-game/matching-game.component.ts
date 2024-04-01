@@ -4,7 +4,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
-import { CategoriesService } from '../services/categories.service';
+import { GameService } from '../../shared/services/game.service';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteCategoryDialogComponent } from '../delete-category-dialog/delete-category-dialog.component';
+import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-matching-game',
@@ -50,13 +51,13 @@ export class MatchingGameComponent implements OnInit{
   count = 1;
   totalGames: number = 0;
   totalPoints: number = 0;
-  constructor(private dialogService : MatDialog,private route:ActivatedRoute,private categoriesService: CategoriesService){}
+  constructor(private dialogService : MatDialog,private route:ActivatedRoute,private gameService: GameService){}
   ngOnInit(): void {
     this.route.params.subscribe(param=>{
       this.id = param['id'];
-      this.catWords =  this.categoriesService.get(Number(this.id));
-      this.totalGames = this.categoriesService.getNumberOfGames();
-      this.totalPoints = this.categoriesService.getTotalPoints();
+      this.catWords =  this.gameService.get(Number(this.id));
+      this.totalGames = this.gameService.getNumberOfGames();
+      this.totalPoints = this.gameService.getTotalPoints();
        this.originalData = JSON.parse(JSON.stringify(this.catWords.words));
        this.getRandomObjects()
     })
@@ -75,7 +76,7 @@ export class MatchingGameComponent implements OnInit{
   
     if (ele.target === correctTarget) {
       this.totalPoints += 2;
-      this.categoriesService.setTotalPoints(this.totalPoints)
+      this.gameService.setTotalPoints(this.totalPoints)
       this.result = 'Right';
     } else {
       this.score -= 2;
@@ -88,7 +89,7 @@ export class MatchingGameComponent implements OnInit{
       allCompleted.isComplete = true;
       allCompleted.id = this.id
       this.totalGames++;
-      this.categoriesService.setNumberOfGames(this.totalGames);
+      this.gameService.setNumberOfGames(this.totalGames);
     }
   
     this.openDialog(ele, ele.target === correctTarget, allCompleted);
@@ -135,5 +136,16 @@ export class MatchingGameComponent implements OnInit{
   getRandomObjects(): void {
     this.originalData = this.originalData.sort(() => Math.random() - 0.5).slice(0, 6);
     this.shuffledData  =  this.shuffleData(JSON.parse(JSON.stringify(this.originalData)));
+    this.score = this.originalData.length * 2
+  }
+  redirectBack() {
+    let dialogRef = this.dialogService.open(ConfirmationModalComponent, {
+      width:'300px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+
+      }});
   }
 }
