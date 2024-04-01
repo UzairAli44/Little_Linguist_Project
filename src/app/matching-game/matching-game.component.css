@@ -16,3 +16,8 @@
   .dataSelected{
     color: #999;
   }
+  .custom-button{
+    background-color: red;
+    color: white;
+    margin: 5px;
+  }

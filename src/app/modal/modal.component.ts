@@ -12,7 +12,7 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { CategoriesService } from '../services/categories.service';
+import { GameService } from '../../shared/services/game.service';
 import { Category } from '../../shared/model/category';
 import { Language } from '../../shared/model/language';
 import { TranslatedWord } from '../../shared/model/translated-word';
@@ -40,7 +40,7 @@ export class ModalComponent {
   newWordInHebrew: any = '';
   constructor(
     public dialogRef: MatDialogRef<ModalComponent>,
-    private categoriesService: CategoriesService,
+    private gameService: GameService,
     @Inject(MAT_DIALOG_DATA) public data: any // Inject the data passed to the modal
   ) {}
 
@@ -50,15 +50,18 @@ export class ModalComponent {
   }
   updateCat() {
     if(this.data.isDelete){
-      this.categoriesService.delete(this.data.card.id);
+      this.gameService.delete(this.data.card.id);
+      this.dialogRef.close({isDelete:this.data.isDelete,id:this.data.card.id})
+      return
     }
+    this.dialogRef.close()
     if (!this.data.isWord) {
       if (this.data.addNew) {
         this.currentCategory.name = this.newCatText;
-        this.categoriesService.add(this.currentCategory);
+        this.gameService.add(this.currentCategory);
       } else {
         this.currentCategory = this.data.card;
-        this.categoriesService.update(this.currentCategory);
+        this.gameService.update(this.currentCategory);
       }
     } else {
       this.currentCategory = this.data.card
@@ -66,7 +69,7 @@ export class ModalComponent {
         ...this.currentCategory.words,
         new TranslatedWord(this.newCatText, this.newWordInHebrew),
       ];
-      this.categoriesService.update(this.currentCategory);
+      this.gameService.update(this.currentCategory);
     }
   }
 }
