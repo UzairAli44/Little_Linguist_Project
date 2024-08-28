@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { MatCardModule } from '@angular/material/card';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -12,7 +14,7 @@ import { MatCardModule } from '@angular/material/card';
     RouterModule, 
     FooterComponent, 
     HeaderComponent, 
-    MatCardModule,
+    MatCardModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

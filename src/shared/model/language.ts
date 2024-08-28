@@ -10,13 +10,13 @@ export enum GameDifficulty {
 
 export const GameLevel = {
     MatchingGame:{
-        title: "Matching Game",
-        description: 'Here is the Description for the Macthing game.',
+        title: "Word Matching Game",
+        description: 'Here is the Description for the Word Macthing game.',
         dificulty: GameDifficulty.Easy
     },
     Trivia:{
-        title: "Trivia",
-        description: 'Here is the Description for the Trivia game.',
+        title: "Word Sorting Game",
+        description: 'Here is the Description for the Word Sorting Game.',
         dificulty: GameDifficulty.Hard
     },
     Bilingual:{

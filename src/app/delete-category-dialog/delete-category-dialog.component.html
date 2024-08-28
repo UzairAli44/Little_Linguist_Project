@@ -35,9 +35,9 @@
       color="primary"
       [ngStyle]="{
         'width': !data?.allCompleted?.isComplete ? '50%' : '',
-        'background-color': selectedGame != GameLevel.MatchingGame && !data?.allCompleted?.isComplete && !data.result ? 'grey' : '#4CAF50'
+        'background-color': (!selectedGame || selectedGame == GameLevel.Bilingual) && !data?.allCompleted?.isComplete && !data.result ? 'grey' : '#4CAF50'
       }"
-      [disabled]="data.id != undefined && (!selectedGame || selectedGame.title != GameLevel.MatchingGame.title)"
+      [disabled]="data.id != undefined && (!selectedGame || selectedGame.title == GameLevel.Bilingual.title)"
       (click)="play()"
       class="custom-button"
     >

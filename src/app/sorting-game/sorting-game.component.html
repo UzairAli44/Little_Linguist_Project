@@ -1,0 +1,34 @@
+<div class="game-container">
+
+  <div class="border">
+    <h2>Play Sorter {{ currentCategory.name }}</h2>
+    <ng-container *ngIf="wordIndex < 6">
+      <p>Is the word <strong>{{ word?.origin }}</strong> part of the <strong>{{ currentCategory.name }}</strong>
+        category?</p>
+
+      <div class="button-container">
+        <button mat-raised-button color="primary" (click)="checkAnswer(true)">Yes</button>
+        <button mat-raised-button color="accent" (click)="checkAnswer(false)">No</button>
+      </div>
+
+      <mat-progress-bar mode="determinate" [value]="(wordIndex) * 100 / words.length" class="custom-progress-bar">
+      </mat-progress-bar>
+    </ng-container>
+
+    <ng-container *ngIf="wordIndex >= 6">
+      <div class="result-container">
+        <div class="result-item" *ngFor="let word of words">
+          <p>Origin: {{ word.origin }}</p>
+          <p>Category: {{ currentCategory.name }}</p>
+          <p>Guess: {{ word.guess ? 'Yes' : 'No' }}</p>
+          <mat-icon class="check-icon" *ngIf="word.guess">check_circle</mat-icon>
+          <mat-icon class="cross-icon" *ngIf="!word.guess">cancel</mat-icon>
+        </div>
+      </div>
+    
+      <button mat-raised-button color="primary" (click)="startNewGame()">New Game</button>
+    </ng-container>
+    
+  </div>
+
+</div>

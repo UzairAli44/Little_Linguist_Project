@@ -40,7 +40,12 @@ export class DeleteCategoryDialogComponent {
 
   play(){
     if(this.data.id != undefined){
-      this.route.navigate(['/game',this.data.id])
+      if (this.selectedGame == GameLevel.MatchingGame) {
+        this.route.navigate(['/game','matching',this.data.id])
+      }
+      else {
+        this.route.navigate(['/game','sorting',this.data.id])
+      }
       this.dialogRef.close()
     }
     else if(this.data.allCompleted.isComplete)
