@@ -16,6 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteCategoryDialogComponent } from '../delete-category-dialog/delete-category-dialog.component';
 import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
+import { GameLevel } from '../../shared/model/language';
 
 @Component({
   selector: 'app-matching-game',
@@ -51,8 +52,11 @@ export class MatchingGameComponent implements OnInit{
   count = 1;
   totalGames: number = 0;
   totalPoints: number = 0;
+  gameId:any;
   constructor(private dialogService : MatDialog,private route:ActivatedRoute,private gameService: GameService){}
   ngOnInit(): void {
+    this.gameId = this.gameService.getGameId();
+    this.gameId = this.gameId + 1;
     this.route.params.subscribe(param=>{
       this.id = param['id'];
       this.catWords =  this.gameService.get(Number(this.id));
@@ -90,6 +94,13 @@ export class MatchingGameComponent implements OnInit{
       allCompleted.id = this.id
       this.totalGames++;
       this.gameService.setNumberOfGames(this.totalGames);
+      this.gameService.setGamesData({
+        Id: this.gameId,
+        category: GameLevel.MatchingGame.title,
+        date: new Date(),
+      });
+      this.gameService.setGameId(this.gameId)
+
     }
   
     this.openDialog(ele, ele.target === correctTarget, allCompleted);

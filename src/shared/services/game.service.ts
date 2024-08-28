@@ -10,6 +10,8 @@ export class GameService {
   private readonly NEXT_ID_KEY = 'nextId';
   private readonly TOTAL_GAME_KEY = 'totalGames';
   private readonly TOTAL_POINTS = 'totalPoints';
+  private readonly GAME_ID = 'gameID';
+  private readonly GAME_DATA = 'gameData';
   private getCategories(): Category[] {
     let categoriesString = localStorage.getItem(this.CATEGORIES_KEY);
   
@@ -77,8 +79,38 @@ export class GameService {
   setNumberOfGames(count: any): void {
     localStorage.setItem(this.TOTAL_GAME_KEY, JSON.stringify(count));
   }
+  setGameId(count: any): void {
+    localStorage.setItem(this.GAME_ID, JSON.stringify(count));
+  }
+  public setGamesData(data:any): void {
+    let gameData = this.getGamesData();
+    gameData.push(data);
+    console.log(gameData)
+    localStorage.setItem(this.GAME_DATA, JSON.stringify(gameData));
+
+  }
+  
+  private getGamesData(): any[] {
+    let categoriesString = localStorage.getItem(this.GAME_DATA);
+  
+    if (!categoriesString) {
+      return [];
+    } else {
+      return JSON.parse(categoriesString);
+    }
+  }
+  
   getNumberOfGames(): number {
     const numberOfGamesString = localStorage.getItem(this.TOTAL_GAME_KEY);
+
+    if (!numberOfGamesString) {
+      return 0; // Default value when no data is found
+    } else {
+      return parseInt(numberOfGamesString, 10); // Parse string to integer
+    }
+  }
+  getGameId(): number {
+    const numberOfGamesString = localStorage.getItem(this.GAME_ID);
 
     if (!numberOfGamesString) {
       return 0; // Default value when no data is found

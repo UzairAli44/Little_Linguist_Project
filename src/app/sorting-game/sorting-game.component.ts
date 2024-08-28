@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { GameLevel } from '../../shared/model/language';
 
 @Component({
   selector: 'app-sorting-game',
@@ -50,6 +51,7 @@ export class SortingGameComponent implements OnInit{
   totalGames: number = 0;
   totalPoints: number = 0;
   currentCategory: any;
+  gameId:any;
   constructor(private dialog: MatDialog, private gameService: GameService, private route:ActivatedRoute){}
 
   ngOnInit(): void {
@@ -58,6 +60,8 @@ export class SortingGameComponent implements OnInit{
       this.id = param['id'];
       this.totalGames = this.gameService.getNumberOfGames();
       this.totalPoints = this.gameService.getTotalPoints();
+      this.gameId = this.gameService.getGameId();
+      this.gameId = this.gameId + 1;
       let categories = this.gameService.list();
       this.currentCategory = categories.find(cat=>cat.id == this.id);
       const randomIndex = Math.floor(Math.random() * categories.length);
@@ -94,6 +98,12 @@ export class SortingGameComponent implements OnInit{
     } else {
       this.totalGames++;
       this.gameService.setNumberOfGames(this.totalGames);
+      this.gameService.setGamesData({
+        Id: this.gameId,
+        category: GameLevel.Trivia.title,
+        date: new Date(),
+      });
+      this.gameService.setGameId(this.gameId)
     }
   }
   startNewGame(){
